@@ -156,7 +156,7 @@ type RegisterField = keyof registerType;
             name={x.title}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-main my-5">{x.label}</FormLabel>
+                <FormLabel className="text-main my-1">{x.label}</FormLabel>
                 <FormControl>
                   <Input type={x.type} {...field} className="outline-none" />
                 </FormControl>
