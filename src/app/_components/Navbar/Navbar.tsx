@@ -6,11 +6,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { signOut, useSession } from "next-auth/react";
+//for active class
+import { usePathname } from "next/navigation";
 
 import { CartContext } from "@/context/cartContext";
 
 export default function Navbar() {
-  
+  const pathname = usePathname();
+
  const {numberOfCarts} =  useContext(CartContext)!
 
   const [isOpen, setIsOpen] = useState(false);
@@ -29,30 +32,40 @@ export default function Navbar() {
     { name: "products", href: "/products" },
     { name: "categories", href: "/categories" },
     { name: "brands", href: "/brands" },
+    { name: "wishlist", href: "/wishlist" },
   ];
 
-const specificlinks = session? links :links.filter((link)=> link.name !=='cart')
+const specificlinks = session? links :links.filter((link)=> link.name !=='cart' && link.name !== 'wishlist')
 
   return (
-    <nav className="bg-emerald-500 text-white">
-      <div className="container w-full mx-auto lg:w-[80%] p-4 flex justify-between items-center">
+    <nav className="bg-main text-white text-xl">
+      <div className="container w-full mx-auto  p-5 flex justify-between items-center">
         {/* Left Section */}
-        <div className="flex items-center gap-6">
-          <Link href="/">
-            <Image src={image} alt="logo" className="w-[100px] h-auto" />
+        <div>
+           <Link href="/">
+            <Image src={image} alt="logo" className="w-[150px] h-auto" />
           </Link>
+        </div>
+        <div className="flex items-center gap-6">
+         
 
           {/* Desktop Links */}
-          <ul className="hidden lg:flex gap-8 items-center">
+          <ul className="hidden lg:flex  items-center">
             {specificlinks.map((link, index) => (
               <li key={index}>
-                <Link className="relative" href={link.href}>
+               <Link
+  href={link.href}
+  className={`relative px-3 py-1 rounded-md ${
+    pathname === link.href ? "bg-white/30 font-semibold" : ""
+  }`}
+>
+
                 
                 {link.name}
 
                 {/* عشان عدد الكارتس */}
                 {link.name === 'cart'&& numberOfCarts !== 0 &&(<span 
-                className="absolute top-[-13px] end-[-10px] size-5 rounded-full bg-[#232F3E] text-main flex justify-center items-center">
+                className="absolute top-[-10px] end-[-1px] size-5 rounded-full  bg-[#51090f] text-main flex justify-center items-center">
                   {numberOfCarts}
                   </span>)}
                 
@@ -70,9 +83,9 @@ const specificlinks = session? links :links.filter((link)=> link.name !=='cart')
     <Link href="/login">login</Link>
   </div>
 ) : (
-  <div className="hidden lg:flex gap-8">
+  <div className="hidden lg:flex gap-8 cursor-pointer">
     <span onClick={logOut}>logout</span>
-    <p>{session?.user.name}</p>
+    <p> hi {session?.user.name}</p>
   </div>
 )}
 

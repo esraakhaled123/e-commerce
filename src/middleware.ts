@@ -21,7 +21,7 @@ export async function middleware(request:NextRequest){
    // if i don't have token
    else{
 
-    if (request.nextUrl.pathname === '/cart' || request.nextUrl.pathname === '/brands' || request.nextUrl.pathname === '/checkout') {
+    if (request.nextUrl.pathname === '/cart' || request.nextUrl.pathname === '/brands' || request.nextUrl.pathname === '/checkout' || request.nextUrl.pathname === '/wishlist') {
   return NextResponse.redirect(new URL("/login", request.url))
 
     }else{
@@ -32,5 +32,5 @@ export async function middleware(request:NextRequest){
 }
 export const config = {
   //ده معناه لو لقتني كتبت كارت او براند او لوجن او ريج عدي علي الميدويير غير كده متعديش عليه 
-  matcher: ['/cart' ,'/brands' ,'/login' ,'/register','/checkout'],
+  matcher: ['/cart' ,'/brands' ,'/login' ,'/register','/checkout' ,'/wishlist'],
 }

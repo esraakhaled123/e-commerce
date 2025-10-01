@@ -5,6 +5,7 @@ import Navbar from "./_components/Navbar/Navbar";
 import { Toaster } from "@/components/ui/sonner"
 import Mysessioncomponents from "./_components/Mysessioncomponents/Mysessioncomponents";
 import CartContextprovider from "@/context/cartContext";
+import Footer from "./_components/footer/Footer";
 
 
 const geistSans = Geist({
@@ -37,6 +38,7 @@ export default function RootLayout({
          <CartContextprovider>
              <Navbar/>
         {children}
+        <Footer/>
          <Toaster />
          </CartContextprovider>
 

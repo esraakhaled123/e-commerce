@@ -9,8 +9,10 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import { Category } from '@/Types/product'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Swipercategory({data}:{data:Category[]}) {
+  
   // console.log(data)
 
   return (
@@ -47,17 +49,20 @@ export default function Swipercategory({data}:{data:Category[]}) {
       >
         {data?.map((cate:Category) => (
           <SwiperSlide key={cate._id}>
-            <div className="w-full h-[150px]">
-              <Image
-                src={cate.image}
-                alt={cate.name}
-                className="w-full h-full object-cover rounded-md"
-                width={100}
-                height={100}
-              />
-            </div>
-            <p className="text-center mt-2">{cate.name}</p>
-          </SwiperSlide>
+  <Link href={`/categories/${cate._id}`}>
+    <div className="w-full h-[150px] cursor-pointer">
+      <Image
+        src={cate.image}
+        alt={cate.name}
+        className="w-full h-full object-cover rounded-md"
+        width={100}
+        height={100}
+      />
+    </div>
+    <p className="text-center mt-2">{cate.name}</p>
+  </Link>
+</SwiperSlide>
+
         ))}
       </Swiper>
     </div>

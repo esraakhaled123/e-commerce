@@ -14,6 +14,7 @@ import { cartProductType } from '@/Types/cart.type';
 import Link from 'next/link';
 
 export default  function Cart() {
+  
 const [product, setProduct] = useState<cartProductType[]>([])
 const [isloading, setIsloading] = useState(true)
 const [isdisable, setIsdisable] = useState(false)
@@ -150,11 +151,11 @@ async function deleteAllCarts(){
 <div className="my-10 container capitalize">
   <div className='flex justify-between items-center '>
        
-      <h1 className='text-2xl text-#[0B4143] font-semibold '>
-        total price : {total }
+      <h1 className='text-2xl text-blue-950 font-semibold '>
+        total price : {total } EGP
         </h1>
       <Button onClick={()=>deleteAllCarts()} 
-       className='bg-main cursor-pointer  my-10 hover:bg-green-900'>
+       className='bg-main text-xl  cursor-pointer  my-10 hover:bg-blue-900'>
          clear all carts
         </Button>
   </div>
@@ -196,7 +197,8 @@ async function deleteAllCarts(){
   onClick={() => delteOneItem(product.product._id)}
   className={`text-white mt-auto text-sm 
     dark:text-red-500 
-    bg-red-700 hover:bg-red-800 
+   bg-red-900 hover:bg-red-800
+
     ${
       removingId === product.product._id
         ? "opacity-50 cursor-not-allowed bg-red-300"
@@ -218,8 +220,8 @@ async function deleteAllCarts(){
 <Link href={`/checkout/${cartID}`}>
 <Button 
   className="
-    my-10  bg-main  hover:bg-green-700  text-white  font-semibold    rounded-2xl  shadow-md  transition-all 
-   duration-300 hover:scale-105
+    my-10  bg-main  hover:bg-blue-700  text-white  font-semibold    rounded-2xl  shadow-md  transition-all 
+   duration-300 hover:scale-105 cursor-pointer
   "
 >
   Checkout Now

@@ -30,8 +30,8 @@ import Singleproduct from '../singleproduct/Singleproduct'
 
 export default function Allproducts({ products }: { products: ProductType[] }) {
   return (
-   <div className='container'>
-     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 proud">
+   <div className='container my-10'>
+     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 proud ">
       {products?.map((product) => (
         <Singleproduct key={product._id} product={product} />
       ))}

@@ -13,13 +13,15 @@ import { useParams} from 'next/navigation'
 
 import { checkoutSchema, checkoutSchemaType } from '@/schema/checkout.schema'
 import payment from '@/checkoutactions/checkout'
+import cashPayment from '@/checkoutactions/cashorder'
+import { useRouter } from 'next/navigation'
+
 export default function Checkout() {
-  // hgeb id 
+const router = useRouter()
+
   const {id }:{id:string} = useParams()
   console.log(id);
   
-//  const router = useRouter()
-
 
   const forms: { title: keyof checkoutSchemaType ; label: string; type: string }[]=[
    
@@ -45,7 +47,9 @@ export default function Checkout() {
   
     details:'',
     phone:'',
-    city:''
+    city:'',
+    paymentmetod:'cash'
+
     
 },
 resolver:zodResolver(checkoutSchema)
@@ -53,14 +57,31 @@ resolver:zodResolver(checkoutSchema)
 
 async function handelCheckout(values:checkoutSchemaType ): Promise<void> {
  console.log(values);
+if(values.paymentmetod === 'card'){
  const resp = await payment(id ,'' ,values)
  console.log(resp);
  if(resp.status==="success"){
   window.location.href=resp.session.url
  }else{
-  toast.error('eee')
+  toast.error('something  wrong')
  }
+ return
 }
+ if (values.paymentmetod === 'cash') {
+  
+    const resp = await cashPayment(id,values);
+    console.log(resp);
+
+    if (resp.status === "success") {
+     
+      toast.success('success payment');
+         router.push('/allorders');
+    } else {
+      toast.error('Card payment failed ');
+    }
+  }
+}
+
 
   return <>
   <div className="w-1/2  lg:w-1/3 mx-auto my-10">
@@ -79,11 +100,49 @@ async function handelCheckout(values:checkoutSchemaType ): Promise<void> {
          <Input type={x.type} {...field} className='outline-none'/>
         </FormControl>
         <FormDescription />
-        <FormMessage className='mb-2' />
+        <FormMessage className='m-2' />
       </FormItem>
     )}
   />
    ))}
+    
+<FormField 
+  control={form.control}
+  name="paymentmetod"
+  render={({ field }) => (
+    <FormItem className="space-y-3 ">
+      <FormLabel className='text-main my-4'>payment method</FormLabel>
+      <FormControl>
+        <div className="flex flex-col gap-y-1 mb-4 ">
+          <label className="flex items-center gap-2">
+            <input
+              type="radio"
+              value="cash"
+              checked={field.value === 'cash'}
+              onChange={field.onChange}
+            />
+            <span>cash</span>
+          </label>
+
+          <label className="flex items-center gap-2">
+            <input
+              type="radio"
+              value="card"
+              checked={field.value === 'card'}
+              onChange={field.onChange}
+            />
+            <span>card</span>
+          </label>
+        </div>
+      </FormControl>
+      <FormMessage className='m2' />
+    </FormItem>
+  )}
+/>
+
+
+
+   
    <Button  className='bg-main cursor-pointer w-full hover:bg-green-900'>pay now</Button>
  </form>
   

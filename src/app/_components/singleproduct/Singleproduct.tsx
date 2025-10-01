@@ -10,17 +10,32 @@ import {
 } from "@/components/ui/card"
 import Link from 'next/link'
 import Image from 'next/image'
-import { FaStar } from 'react-icons/fa'
+
 import Addtocartbtn from '../addtocartbtn/Addtocartbtn'
 import { ProductType } from '@/Types/product'
-export default function Singleproduct({product}:{product :ProductType}) {
+import getuserWishlists from '@/api/wighlist/getAlluserwishlists';
+
+import Mywishlist from '../mywishlist/Mywishlist'
+import { FaStar } from 'react-icons/fa'
+export default async function Singleproduct({product}:{product :ProductType}) {
+      const wishlistResp = await getuserWishlists();
+  const wishlistIds = wishlistResp?.data?.map((item: ProductType) => item._id) || [];
+
   return <>
   <div >
- <Card className='text-center gap-2 p-3  '>
+ <Card className=' gap-1 p-3 text-center '>
+  <div className=" flex justify-end ">
+ <div className='flex items-center justify-center size-8 border-2  border-blue-200 rounded-full'>
+  <Mywishlist id= {product._id} initialLike={wishlistIds.includes(product._id)}/>
+ </div>
+</div>
+
   <Link href={`/products/${product.id}`}>
+ 
   <CardHeader>
-     
-   <CardTitle className="flex justify-center">
+    
+<CardTitle className="flex   justify-center">
+ 
   <Image
     src={product.imageCover}
     alt="image"
@@ -30,8 +45,7 @@ export default function Singleproduct({product}:{product :ProductType}) {
   />
 </CardTitle>
 
-  
-                              {/* <CardAction className='mx-10'> <FaHeart/></CardAction> */}
+
 
     <CardDescription >{product.category?.name}</CardDescription>
     
@@ -39,7 +53,7 @@ export default function Singleproduct({product}:{product :ProductType}) {
   <CardContent >
     <p className='text-main line-clamp-1'> {product.title}</p>
   </CardContent>
-  <CardFooter className='flex justify-between items-center'>
+  <CardFooter className='flex justify-between  items-center'>
       <span className='text-red-500'>
         {product.price}EGP
       </span>

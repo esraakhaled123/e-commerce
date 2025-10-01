@@ -15,7 +15,8 @@ export default async function ProductDetails({ params }: { params: Promise<{ id:
   const {id} = await  params
     
  const data:ProductType = await ProductDetailsId(id)
- if (!data) return <div className='flex h-screen items-center justify-center'>no products here</div>
+ if (!data) return
+  <div className='flex h-screen items-center justify-center'>no products here</div>
  console.log(data.category._id);// id el montag eli ana feh
  
  const relatedproduct = await getRelatedProducts(data.category._id)
@@ -25,7 +26,7 @@ export default async function ProductDetails({ params }: { params: Promise<{ id:
   return (
     <div className='container capitalize'>
     <div className="grid grid-cols-1 md:grid-cols-6 gap-6 md:gap-8 py-6">
-  {/* الصورة */}
+ 
   <div className="md:col-span-2 flex justify-center md:justify-start">
     <Image
   src={data.imageCover}
@@ -56,7 +57,7 @@ export default async function ProductDetails({ params }: { params: Promise<{ id:
   </div>
 </div>
 
-<div className='grid  grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 proud'>
+<div className='grid  grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 proud my-10'>
             {
                 relatedproduct.data?.map((product:ProductType)=>
                 

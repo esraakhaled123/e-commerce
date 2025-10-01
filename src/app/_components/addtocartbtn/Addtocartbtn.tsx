@@ -21,13 +21,13 @@ export default  function Addtocartbtn({id}:{id:string}) {
    } catch (error) {
   console.log(error);
   const err = error as Error;  // مش فاهمه ليه 
-  toast.success(err.message);
+  toast.error(err.message);
 
 }
     }
   return (
     <div>
-<Button onClick={()=>checkAddproduct(id)} className='cursor-pointer capitalize bg-main hover:bg-green-800 w-full my-2' >add to cart</Button>
+<Button onClick={()=>checkAddproduct(id)} className='cursor-pointer capitalize bg-main hover:bg-blue-700 w-full my-2' >add to cart</Button>
 
     </div>
   )

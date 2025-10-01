@@ -119,21 +119,25 @@
   body {
     @apply bg-background text-foreground;
   }
- 
+
 }
-
-
+/* bg-emerald-600 */
 @layer utilities {
   .container {
-    @apply mx-auto w-[80%];
+    @apply mx-auto w-[90%];
   }
   .bg-main {
-    @apply bg-emerald-600
+    @apply bg-[#306aa7]
   }
   .text-main{
-      @apply text-green-600 capitalize
+      @apply text-[#306aa7] capitalize
+  }
+  .active{
+    @apply bg-white 
   }
 }
+
+
 
 
 /* //swiper */
@@ -176,7 +180,6 @@
   font-weight: bold;
 }
 
-
 /* .loader */
 .loader {
       width: 48px;
@@ -191,7 +194,7 @@
       position: absolute;
       inset: 0px;
       border-radius: 50%;
-      border: 5px solid #49aa5b78;
+      border: 5px solid #306aa7;
       animation: prixClipFix 2s linear infinite ;
     }
 

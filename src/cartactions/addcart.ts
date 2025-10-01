@@ -17,7 +17,7 @@ export default async function AddToCart(id:string){
        },
        body:JSON.stringify({productId:id})
     })
-    const bla = resp.json()
+    const bla = await resp.json()
    
     return bla
     
