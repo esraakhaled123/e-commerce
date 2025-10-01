@@ -143,7 +143,7 @@ if(values.paymentmetod === 'card'){
 
 
    
-   <Button  className='bg-main cursor-pointer w-full hover:bg-green-900'>pay now</Button>
+   <Button  className='bg-main cursor-pointer w-full hover:bg-blue-900'>pay now</Button>
  </form>
   
 </Form>

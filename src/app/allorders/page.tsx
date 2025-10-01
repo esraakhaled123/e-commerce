@@ -25,9 +25,9 @@ export default function Allorders() {
           orders.map((order, index) => (
             <div
               key={index}
-              className="bg-white shadow-md rounded-lg p-5 my-6 border-l-4 border-green-600"
+              className="bg-white shadow-md rounded-lg p-5 my-6 border-l-4 border-blue-600"
             >
-              <h3 className="text-lg font-semibold text-green-700 mb-2">
+              <h3 className="text-lg font-semibold text-blue-700 mb-2">
                 Order #{index + 1}
               </h3>
               <div className="grid grid-cols-1 gap-2 text-slate-700">
@@ -60,7 +60,7 @@ export default function Allorders() {
                       className="rounded-md border"
                     />
                     <div className="text-slate-700">
-                      <p className="font-semibold text-green-700">
+                      <p className="font-semibold text-blue-700">
                         {item.product.title}
                       </p>
                       <p>peices: {item.count}</p>

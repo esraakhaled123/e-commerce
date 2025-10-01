@@ -20,27 +20,27 @@ export default function Register() {
   const forms: { title: RegisterField; label: string; type: string }[]=[
     {
       title:'name',
-      label:'enter your name',
+      label:'enter your name :',
       type:'text'
     },
     {
       title:'email',
-      label:'enter your email',
+      label:'enter your email :',
       type:'email'
     },
     {
       title:'password',
-      label:'enter your password',
+      label:'enter your password :',
       type:'password'
     },
     {
       title:'rePassword',
-      label:'confirm rePassword',
+      label:'confirm rePassword :',
       type:'password'
     },
      {
       title:'phone',
-      label:'enter your phone',
+      label:'enter your phone :',
       type:'tel'
     },
     
@@ -156,7 +156,7 @@ type RegisterField = keyof registerType;
             name={x.title}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-main">{x.label}</FormLabel>
+                <FormLabel className="text-main my-5">{x.label}</FormLabel>
                 <FormControl>
                   <Input type={x.type} {...field} className="outline-none" />
                 </FormControl>
