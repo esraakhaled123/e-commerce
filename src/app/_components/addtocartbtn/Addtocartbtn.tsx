@@ -11,13 +11,23 @@ export default  function Addtocartbtn({id}:{id:string}) {
    async function checkAddproduct(id:string){
    try {
        const resp = await  AddToCart(id)
-       console.log(resp);
-       if(resp.status=='success'){
-         toast.success("added to cart successfly")
-         setNumberOfCarts(numberOfCarts + 1)
-       }else{
-          toast.success("can't add this product")
-       }
+      //  console.log(resp);
+      //  if(resp.status=='success'){
+      //    toast.success("added to cart successfly")
+      //    setNumberOfCarts(numberOfCarts + 1)
+      //  }else{
+      //     toast.success("can't add this product")
+      //  }
+        const res = await AddToCart(id);
+
+    if (!res.success) {
+      toast.error(res.message);
+      return;
+    }
+
+    toast.success("Added to cart successfully");
+  
+
    } catch (error) {
   console.log(error);
   const err = error as Error;  // مش فاهمه ليه 
