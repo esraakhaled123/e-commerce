@@ -100,7 +100,7 @@ const specificlinks = session? links :links.filter((link)=> link.name !=='cart' 
 
     {/* Mobile Dropdown Menu */}
 {isOpen && (
-  <div className="lg:hidden bg-emerald-600 px-4 py-3">
+  <div className="lg:hidden bg-blue-600 px-4 py-3">
     <ul className="flex flex-col gap-4">
       {specificlinks.map((link, index) => (
         <li key={index}>

@@ -1,5 +1,5 @@
 
-
+'use server'
 import verifyToken from "@/api/verifytoken"
   
 export default async function getUserOrders() {
