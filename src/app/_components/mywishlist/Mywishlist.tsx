@@ -1,69 +1,63 @@
 'use client' 
 
 import addWishList from '@/api/wighlist/addwishlist';
-import getuserWishlists from '@/api/wighlist/getAlluserwishlists';
 import removeWishList from '@/api/wighlist/removeWishList';
-
- import React, { useEffect, useState } from 'react' 
- import { FaHeart, FaRegHeart } from 'react-icons/fa' 
+import React, { useState } from 'react' 
+import { FaHeart, FaRegHeart } from 'react-icons/fa' 
 import { toast } from 'sonner';
- export default  function Mywishlist({ id, initialLike }: { id: string, initialLike: boolean } ) { 
-      const [isLiked, setIsLiked] = useState(initialLike);
-     
-    async function getMyWhishlists (id:string) {
+
+export default function Mywishlist({ id, initialLike }: { id: string, initialLike: boolean } ) { 
+    const [isLiked, setIsLiked] = useState(initialLike);
+    const [isLoading, setIsLoading] = useState(false);
+
+    async function toggleWishlist(id: string) {
+        if (isLoading) return;
+        
+        // Optimistic Update: Change UI immediately
+        const previousState = isLiked;
+        setIsLiked(!previousState);
+        setIsLoading(true);
+
         try {
-      
-          if(!isLiked){
-              const resp = await addWishList(id)
-            console.log(resp); 
-             console.log(id); 
-             if(resp.status == 'success'){
-                toast.success(resp.message)
-                setIsLiked(true)
-               
-             }else{
-               toast.error(resp.message)
-             }
-          } else{
-            const resp = await removeWishList(id)
-            console.log(resp); 
-             console.log(id); 
-             if(resp.status == 'success'){
-                toast.success('removed successfuly')
-                 setIsLiked(false)
-                 
-                 
-             }else{
-               toast.error(resp.statusMsg )
-             }
-          }
+            if (!previousState) {
+                const resp = await addWishList(id);
+                if (resp.status === 'success') {
+                    toast.success(resp.message);
+                } else {
+                    // Rollback if failed
+                    setIsLiked(previousState);
+                    toast.error(resp.message || "Failed to add to wishlist");
+                }
+            } else {
+                const resp = await removeWishList(id);
+                if (resp.status === 'success') {
+                    toast.success('Removed successfully');
+                } else {
+                    // Rollback if failed
+                    setIsLiked(previousState);
+                    toast.error(resp.statusMsg || "Failed to remove from wishlist");
+                }
             }
-      catch (error: unknown) {
-  if (error instanceof Error) {
-    toast.error(error.message)
-  } else {
-    toast.error("Operation failed")
-  }
-}
-
+        } catch (error: unknown) {
+            // Rollback on network/server error
+            setIsLiked(previousState);
+            if (error instanceof Error) {
+                toast.error(error.message);
+            } else {
+                toast.error("Operation failed");
+            }
+        } finally {
+            setIsLoading(false);
         }
-        
-useEffect(() => {
-  getuserWishlists()
+    }
 
-}, [])
-   
-        return<>
-        
- {isLiked ? 
- <FaHeart
- onClick={()=>getMyWhishlists(id)} 
- className='cursor-pointer text-red-500'/> 
-:  (
-        <FaRegHeart
-          onClick={()=>getMyWhishlists(id)}
-          className="cursor-pointer text-gray-400"
-        />)}
-    
-    
-    </> }
+    return (
+        <div onClick={() => toggleWishlist(id)} className="cursor-pointer">
+            {isLiked ? (
+                <FaHeart className='text-red-500 transition-colors duration-200' /> 
+            ) : (
+                <FaRegHeart className="text-gray-400 transition-colors duration-200 hover:text-red-400" />
+            )}
+        </div>
+    );
+}

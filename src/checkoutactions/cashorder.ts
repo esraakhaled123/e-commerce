@@ -22,6 +22,6 @@ export default async function cashPayment(cartId:string , formValues:checkoutSch
     }
     
     )
-    const data = resp.json()
+    const data = await resp.json()
     return data
 }

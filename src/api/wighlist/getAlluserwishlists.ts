@@ -19,8 +19,12 @@ export default async function getuserWishlists(){
 
         }
      })
-  const data = await respo.json() 
-  console.log(data);
-return data
+  try {
+    const data = await respo.json() 
+    return data
+  } catch (error) {
+    console.error("Error fetching wishlist:", error);
+    return { status: "error", data: [] }
+  }
 }
 

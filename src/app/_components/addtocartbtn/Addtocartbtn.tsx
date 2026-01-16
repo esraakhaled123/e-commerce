@@ -1,44 +1,50 @@
-
 'use client'
 import AddToCart from '@/cartactions/addcart'
 import { Button } from '@/components/ui/button'
 import { CartContext } from '@/context/cartContext'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { toast } from 'sonner'
 
-export default  function Addtocartbtn({id}:{id:string}) {
- const {numberOfCarts ,setNumberOfCarts} = useContext(CartContext)!
-   async function checkAddproduct(id:string){
-   try {
-       const resp = await  AddToCart(id)
-      //  console.log(resp);
-      //  if(resp.status=='success'){
-      //    toast.success("added to cart successfly")
-      //    setNumberOfCarts(numberOfCarts + 1)
-      //  }else{
-      //     toast.success("can't add this product")
-      //  }
-        const res = await AddToCart(id);
+export default function Addtocartbtn({id}:{id:string}) {
+    const context = useContext(CartContext);
+    const [isLoading, setIsLoading] = useState(false);
 
-    if (!res.success) {
-      toast.error(res.message);
-      return;
+    async function checkAddproduct(id: string) {
+        if (isLoading) return;
+        setIsLoading(true);
+        
+        try {
+            const res = await AddToCart(id);
+
+            if (!res.success) {
+                toast.error(res.message);
+                return;
+            }
+
+            toast.success("Added to cart successfully");
+            
+            if (context) {
+                context.setNumberOfCarts(prev => prev + 1);
+            }
+
+        } catch (error) {
+            console.error(error);
+            const err = error as Error;
+            toast.error(err.message || "Failed to add to cart");
+        } finally {
+            setIsLoading(false);
+        }
     }
 
-    toast.success("Added to cart successfully");
-  
-
-   } catch (error) {
-  console.log(error);
-  const err = error as Error;  // مش فاهمه ليه 
-  toast.error(err.message);
-
-}
-    }
-  return (
-    <div>
-<Button onClick={()=>checkAddproduct(id)} className='cursor-pointer capitalize bg-main hover:bg-blue-700 w-full my-2' >add to cart</Button>
-
-    </div>
-  )
+    return (
+        <div>
+            <Button 
+                onClick={() => checkAddproduct(id)} 
+                disabled={isLoading}
+                className='cursor-pointer capitalize bg-main hover:bg-blue-700 w-full my-2'
+            >
+                {isLoading ? "Adding..." : "Add to cart"}
+            </Button>
+        </div>
+    )
 }

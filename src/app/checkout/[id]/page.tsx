@@ -73,11 +73,10 @@ if(values.paymentmetod === 'card'){
     console.log(resp);
 
     if (resp.status === "success") {
-     
-      toast.success('success payment');
-         router.push('/allorders');
+      toast.success('Payment successful');
+      router.push('/allorders');
     } else {
-      toast.error('Card payment failed ');
+      toast.error(resp.message || 'Cash payment failed');
     }
   }
 }

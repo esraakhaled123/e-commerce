@@ -17,16 +17,13 @@ import getuserWishlists from '@/api/wighlist/getAlluserwishlists';
 
 import Mywishlist from '../mywishlist/Mywishlist'
 import { FaStar } from 'react-icons/fa'
-export default async function Singleproduct({product}:{product :ProductType}) {
-      const wishlistResp = await getuserWishlists();
-  const wishlistIds = wishlistResp?.data?.map((item: ProductType) => item._id) || [];
-
+export default function Singleproduct({product, isLiked}:{product :ProductType, isLiked: boolean}) {
   return <>
   <div >
  <Card className=' gap-1 p-3 text-center '>
   <div className=" flex justify-end ">
  <div className='flex items-center justify-center size-8 border-2  border-blue-200 rounded-full'>
-  <Mywishlist id= {product._id} initialLike={wishlistIds.includes(product._id)}/>
+  <Mywishlist id= {product._id} initialLike={isLiked}/>
  </div>
 </div>
 

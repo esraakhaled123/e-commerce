@@ -27,13 +27,21 @@
 import React from 'react'
 import { ProductType } from '@/Types/product'
 import Singleproduct from '../singleproduct/Singleproduct'
+import getuserWishlists from '@/api/wighlist/getAlluserwishlists'
 
-export default function Allproducts({ products }: { products: ProductType[] }) {
+export default async function Allproducts({ products }: { products: ProductType[] }) {
+  const wishlistResp = await getuserWishlists();
+  const wishlistIds = new Set(wishlistResp?.data?.map((item: ProductType) => item._id) || []);
+
   return (
    <div className='container my-10'>
      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 proud ">
       {products?.map((product) => (
-        <Singleproduct key={product._id} product={product} />
+        <Singleproduct 
+          key={product._id} 
+          product={product} 
+          isLiked={wishlistIds.has(product._id)} 
+        />
       ))}
     </div>
    </div>
