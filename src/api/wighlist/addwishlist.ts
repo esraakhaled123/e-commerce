@@ -21,6 +21,8 @@ export default async function addWishList(id:string){
           
        })
        const bla = await resp.json()
+
+      console.log(bla);
       console.log(bla);
       
        return bla
