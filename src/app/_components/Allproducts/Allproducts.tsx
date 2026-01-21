@@ -37,11 +37,17 @@ export default async function Allproducts({ products }: { products: ProductType[
    <div className='container my-10'>
      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 proud ">
       {products?.map((product) => (
-        <Singleproduct 
-          key={product._id} 
-          product={product} 
-          isLiked={wishlistIds.has(product._id)} 
-        />
+        // <Singleproduct 
+        //   key={product._id} 
+        //   product={product} 
+        //   isLiked={wishlistIds.has(product._id)} 
+        // />
+        <Singleproduct
+  key={product._id}
+  product={product}
+  isLiked={wishlistIds.has(product._id)}
+/>
+
       ))}
     </div>
    </div>
